@@ -39,8 +39,9 @@ export class UsersService {
   }
 
   async update(updateUserDto: UpdateUsersDto) {
-    const { intra_id } = updateUserDto;
+    const { intra_id, nickname } = updateUserDto;
     await this.existCheck('intra_id', { intra_id }, intra_id);
+    await this.duplicateCheck('nickname', { nickname }, nickname);
     const updateResult = this.usersRepository.update(intra_id, updateUserDto);
     return updateResult;
   }

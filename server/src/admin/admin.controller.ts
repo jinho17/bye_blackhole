@@ -28,7 +28,7 @@ export class AdminController {
   }
 
   // below apis are for test
-  @Get()
+  @Get('all')
   findAll() {
     // console.log('find all');
     return this.usersService.findAll();

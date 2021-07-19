@@ -1,24 +1,32 @@
-import { Controller, Get, Param, Delete, Post, Body, Patch, Put, HttpException, HttpStatus, Query} from '@nestjs/common';
+import { Controller, Get, Body, Query, Put } from '@nestjs/common';
 import { ProfileService } from './profile.service';
 
 @Controller('profile')
 export class ProfileController {
-	constructor(private readonly profileService: ProfileService) {}
+  constructor(private readonly profileService: ProfileService) {}
 
-	@Get('')
-	async getProfile(@Query('myID') myID:string, @Query('otherID') otherID:string): Promise<{history:{win:boolean, p2:string}[], friend:boolean, block:boolean, win:number, lose:number} | {history:{win:boolean, p2:string}[], win:number, lose:number}> {
-		return await this.profileService.getProfile(myID, otherID);
-	}
+  @Get()
+  findProfileByIntraId(@Query() para) {
+    const { myID, otherID } = para;
+    return this.profileService.findProfileById(myID, otherID);
+  }
 
-	@Put('/friend')
-	async IsFriend(@Body() {myID, otherID, isFriend})
-	{
-		return await this.profileService.IsFriend(myID, otherID, isFriend)
-	}
+  @Put('friend')
+  addFriend(@Body() body) {
+    const { myID, otherID } = body;
+    return this.profileService.addFriend(myID, otherID);
+  }
 
-	@Put('/block')
-	async IsBlock(@Body() {myID, otherID, isFriend})
-	{
-		return await this.profileService.IsBlock(myID, otherID, isFriend)
-	}
+  @Put('block')
+  addBlock(@Body() body) {
+    const { myID, otherID } = body;
+    return this.profileService.addBlock(myID, otherID);
+  }
+
+  // behind functions are for develop
+  @Get('all')
+  findAll() {
+    // console.log('find all');
+    return this.profileService.findAll();
+  }
 }

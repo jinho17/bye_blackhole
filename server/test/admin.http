@@ -2,8 +2,8 @@ POST http://localhost:8080/admin HTTP/1.1
 Content-Type: application/json
 
 {
-	"intra_id": "taekim",
-	"nickname": "taekim",
+	"intra_id": "notjinkim",
+	"nickname": "jinkimnick",
 	"auth_token" : "sayi@@mail",
 	"icon" : "sayi is sayi",
 	"friend_list": ["taekkim", "jinkim"]
@@ -13,8 +13,8 @@ Content-Type: application/json
 # Content-Type: application/json
 
 # {
-# 	"intra_id": "jinkim",
-# 	"nickname": "jinkimnick",
+# 	"intra_id": "taekim",
+# 	"nickname": "taekimnick",
 # 	"auth_token" : "sayi@@mail",
 # 	"icon" : "sayi is sayi",
 # 	"friend_list": ["taekkim"]
@@ -22,5 +22,5 @@ Content-Type: application/json
 
 # DELETE http://localhost:8080/admin/clear HTTP/1.1
 
-# GET http://localhost:8080/admin HTTP/1.1
+# GET http://localhost:8080/admin/all HTTP/1.1
 

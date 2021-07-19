@@ -1,15 +1,18 @@
 import axios from 'axios';
-import {
-  testPostStatus,
-  testPutStatus,
-  testPatchStatus,
-} from './test-util.spec';
+import { testPostStatus, testPatchStatus } from '../../test/test-util.spec';
 const url = 'http://localhost:8080/admin';
 let user = {
   intra_id: 'sayi',
   nickname: 'intra_dup',
   auth_token: 'sayi token',
   icon: 'sayi is sayi',
+};
+
+let user2 = {
+  intra_id: 'taekim',
+  nickname: 'taekimnick',
+  auth_token: 'taekim token',
+  icon: 'taekim is taekim',
 };
 
 const testCreateUser = async (
@@ -43,6 +46,16 @@ describe('admin create 테스트', () => {
     ));
 });
 
+const testUpdateUser = async (
+  okBody: object,
+  failBody: object,
+  error: string,
+) => {
+  await testPatchStatus(url, okBody, 200);
+  const fail = await testPatchStatus(url, failBody, 400);
+  expect(fail).toBe(error);
+};
+
 describe('admin update 테스트', () => {
   const updateBody = {
     intra_id: user.intra_id,
@@ -52,15 +65,20 @@ describe('admin update 테스트', () => {
   beforeEach(async () => {
     await axios.delete(`${url}/clear`);
     await axios.post(url, user);
+    await axios.post(url, user2);
   });
 
-  it('intra_id 존재 확인', async () => {
-    await testPatchStatus(url, updateBody, 200);
-    const fail = await testPatchStatus(
-      url,
-      { ...updateBody, intra_id: user.icon },
-      400,
-    );
-    expect(fail).toBe(`intra_id: ${user.icon} is not exist`);
-  });
+  it('intra_id 존재 확인', async () =>
+    testUpdateUser(
+      updateBody,
+      { ...updateBody, intra_id: 'fail' },
+      `intra_id: fail is not exist`,
+    ));
+
+  it('nicknam 중복 확인', async () =>
+    testUpdateUser(
+      updateBody,
+      { ...updateBody, nickname: user2.nickname },
+      `nickname: ${user2.nickname} is already exist`,
+    ));
 });
