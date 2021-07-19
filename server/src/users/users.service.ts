@@ -48,26 +48,37 @@ export class UsersService {
 
   async addFriend(myID: string, otherID: string) {
     let { friend_list } = await this.existCheck(
-      'intra_id',
-      { intra_id: myID },
+      'nickname',
+      { nickname: myID },
       myID,
     );
+    const { intra_id } = await this.existCheck(
+      'nickname',
+      { nickname: otherID },
+      otherID,
+    );
+
     if (friend_list) {
-      if (!friend_list.includes(otherID)) friend_list.push(otherID);
-    } else friend_list = [otherID];
+      if (!friend_list.includes(intra_id)) friend_list.push(intra_id);
+    } else friend_list = [intra_id];
     return this.usersRepository.update(myID, { friend_list });
   }
 
   async addBlock(myID: string, otherID: string) {
     let { block_list } = await this.existCheck(
-      'intra_id',
-      { intra_id: myID },
+      'nickname',
+      { nickname: myID },
       myID,
     );
-    if (block_list) {
-      if (!block_list.includes(otherID)) block_list.push(otherID);
-    } else block_list = [otherID];
+    const { intra_id } = await this.existCheck(
+      'nickname',
+      { nickname: otherID },
+      otherID,
+    );
 
+    if (block_list) {
+      if (!block_list.includes(intra_id)) block_list.push(intra_id);
+    } else block_list = [intra_id];
     return this.usersRepository.update(myID, { block_list });
   }
 

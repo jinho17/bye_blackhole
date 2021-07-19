@@ -7,7 +7,7 @@ import { AdminModule } from '../admin/admin.module';
 import { UsersEntity } from '../users/entities/users.entity';
 import { MatchHistory } from '../match_history/entities/match-history.entity';
 import { ProfileModule } from '../profile/profile.module';
-
+import { MatchHistoryModule } from 'src/match_history/match_history.module';
 // jinkim
 import { ft_user } from '../Entity/User.entity';
 import { chat_room } from '../Entity/ChatRoom.entity';
@@ -29,6 +29,7 @@ import { LobbyModule } from '../lobby/lobby.module';
     LobbyModule,
     AdminModule,
     ProfileModule,
+    MatchHistoryModule,
   ],
   controllers: [AppController],
   providers: [AppGateway],
