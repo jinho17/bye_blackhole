@@ -57,11 +57,10 @@ export class UsersService {
       { nickname: otherID },
       otherID,
     );
-
     if (friend_list) {
       if (!friend_list.includes(intra_id)) friend_list.push(intra_id);
     } else friend_list = [intra_id];
-    return this.usersRepository.update(myID, { friend_list });
+    return this.usersRepository.update({ nickname: myID }, { friend_list });
   }
 
   async addBlock(myID: string, otherID: string) {
@@ -79,7 +78,7 @@ export class UsersService {
     if (block_list) {
       if (!block_list.includes(intra_id)) block_list.push(intra_id);
     } else block_list = [intra_id];
-    return this.usersRepository.update(myID, { block_list });
+    return this.usersRepository.update({ nickname: myID }, { block_list });
   }
 
   async remove(nickname: string) {

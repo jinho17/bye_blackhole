@@ -19,8 +19,8 @@ export class ProfileService {
       const block = this.nullCheckInclude(block_list, intra_id);
       profile = { friend, block };
     }
-    const { list, win, lose } = await this.checkWin(intra_id);
-    return { ...profile, list, win, lose };
+    const { history, win, lose } = await this.checkWin(intra_id);
+    return { ...profile, history, win, lose };
   }
 
   async addFriend(myID: string, otherID: string) {
@@ -49,9 +49,10 @@ export class ProfileService {
   }
 
   async checkWin(intra_id: string) {
-    let profile = { list: [], win: 0, lose: 0 };
+    let profile = { history: [], win: 0, lose: 0 };
     const total_history = await this.matchHistoryService.findById(intra_id);
 
+    console.log(total_history);
     if (total_history) {
       let count = 5;
       for (let index = total_history.length - 1; index >= 0; index--) {
@@ -64,7 +65,7 @@ export class ProfileService {
           profile.win++;
           win = true;
         }
-        if (count-- > 0) profile.list.push({ nickname, win });
+        if (count-- > 0) profile.history.push({ nickname, win });
       }
       profile.lose = total_history.length - profile.win;
     }

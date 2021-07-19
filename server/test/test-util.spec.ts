@@ -12,11 +12,11 @@ const parseAxios = (v) => {
 };
 const testGetStatus = async (
   url: string,
-  body: object,
+  para: object,
   expectStatus: number,
 ) => {
   const result = await axios
-    .post(url, body)
+    .get(url, para)
     .then((v) => v)
     .catch((reason) => reason.response);
   expect(result.status).toBe(expectStatus);

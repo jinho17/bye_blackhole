@@ -1,20 +1,20 @@
-GET http://localhost:8080/profile?myID=taekimnick&otherID=taekimnick HTTP/1.1
+# GET http://localhost:8080/profile?myID=taekimnick&otherID=taekimnick HTTP/1.1
 
-# POST http://localhost:8080/profile/friend HTTP/1.1
-# Content-Type: application/json
+PUT http://localhost:8080/profile/friend HTTP/1.1
+Content-Type: application/json
 
-# {
-# 	"myID":"jinkim",
-# 	"otherID":"sayi"
-# }
+{
+	"myID":"jinkimnick",
+	"otherID":"taekimnick"
+}
 
-# POST http://localhost:8080/profile/block HTTP/1.1
-# Content-Type: application/json
+PUT http://localhost:8080/profile/block HTTP/1.1
+Content-Type: application/json
 
-# {
-# 	"myID":"jinkim",
-# 	"otherID":"sayi"
-# }
+{
+	"myID":"jinkimnick",
+	"otherID":"sayinick"
+}
 
 # GET http://localhost:8080/profile HTTP/1.1
 # GET http://localhost:8080/profile/all HTTP/1.1
