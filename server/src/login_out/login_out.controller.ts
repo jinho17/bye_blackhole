@@ -1,28 +1,28 @@
-import { Controller, Get, Post, Body, Patch } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
+import { Controller, Get, Post, Body, Patch, Query } from '@nestjs/common';
+import { LogInOutService } from './login_out.service';
 import { CreateUsersDto } from '../users/dto/create-users.dto';
 import { UpdateUsersDto } from '../users/dto/update-users.dto';
 
 @Controller('log')
 export class LogInOutController {
-  constructor(private readonly usersService: UsersService) {}
-
-  @Get('in')
-  findAll() {
-    // console.log('find all');
-    // return this.usersService.findAll();
-  }
+  constructor(private readonly logInOutService: LogInOutService) {}
 
   @Post('in')
-  create(@Body() createUserDto: CreateUsersDto) {
-    // console.log('create');
-    // return this.usersService.create(createUserDto);
+  create(@Body() body) {
+    // const { intra_id, password } = body;
+    // return this.logInOutService.create();
+  }
+
+  @Get('in')
+  login(@Query('code') code: string) {
+    console.log(code);
+    return this.logInOutService.login(code);
   }
 
   @Patch('out')
   update(@Body() updateUserDto) {
     // console.log('update');
-    // return this.usersService.update(updateUserDto);
+    // return this.logInOutService.update(updateUserDto);
   }
 
   // below apis are for test
