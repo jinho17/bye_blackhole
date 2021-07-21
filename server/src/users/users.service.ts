@@ -58,12 +58,12 @@ export class UsersService {
       otherID,
     );
     const idx = friend_list.indexOf(intra_id);
-    if (idx <= -1 && isFriend) friend_list.push(intra_id);
+    if (idx === -1 && isFriend) friend_list.push(intra_id);
     else if (idx > -1 && !isFriend) friend_list.splice(idx, 1);
     return this.usersRepository.update({ nickname: myID }, { friend_list });
   }
 
-  async addBlock(myID: string, otherID: string) {
+  async addBlock(myID: string, otherID: string, isBlock: boolean) {
     let { block_list } = await this.existCheck(
       'nickname',
       { nickname: myID },
@@ -74,10 +74,9 @@ export class UsersService {
       { nickname: otherID },
       otherID,
     );
-
-    if (block_list) {
-      if (!block_list.includes(intra_id)) block_list.push(intra_id);
-    } else block_list = [intra_id];
+    const idx = block_list.indexOf(intra_id);
+    if (idx === -1 && isBlock) block_list.push(intra_id);
+    else if (idx > -1 && !isBlock) block_list.splice(idx, 1);
     return this.usersRepository.update({ nickname: myID }, { block_list });
   }
 

@@ -19,8 +19,8 @@ export class ProfileController {
 
   @Put('block')
   addBlock(@Body() body) {
-    const { myID, otherID } = body;
-    return this.profileService.addBlock(myID, otherID);
+    const { myID, otherID, isBlock } = body;
+    return this.profileService.addBlock(myID, otherID, isBlock);
   }
 
   // behind functions are for develop

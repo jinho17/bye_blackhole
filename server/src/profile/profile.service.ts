@@ -27,8 +27,8 @@ export class ProfileService {
     return await this.usersService.addFriend(myID, otherID, isFriend);
   }
 
-  async addBlock(myID: string, otherID: string) {
-    return await this.usersService.addBlock(myID, otherID);
+  async addBlock(myID: string, otherID: string, isBlock: boolean) {
+    return await this.usersService.addBlock(myID, otherID, isBlock);
   }
 
   async findAll() {
