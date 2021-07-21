@@ -46,7 +46,7 @@ export class UsersService {
     return updateResult;
   }
 
-  async addFriend(myID: string, otherID: string) {
+  async addFriend(myID: string, otherID: string, isFriend: boolean) {
     let { friend_list } = await this.existCheck(
       'nickname',
       { nickname: myID },
@@ -57,9 +57,9 @@ export class UsersService {
       { nickname: otherID },
       otherID,
     );
-    if (friend_list) {
-      if (!friend_list.includes(intra_id)) friend_list.push(intra_id);
-    } else friend_list = [intra_id];
+    const idx = friend_list.indexOf(intra_id);
+    if (idx <= -1 && isFriend) friend_list.push(intra_id);
+    else if (idx > -1 && !isFriend) friend_list.splice(idx, 1);
     return this.usersRepository.update({ nickname: myID }, { friend_list });
   }
 

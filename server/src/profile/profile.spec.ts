@@ -89,7 +89,11 @@ const testAddFriend = async (
 describe('profile add friend 테스트', () => {
   beforeEach(async () => await initDB());
 
-  const okBody = { myID: sayi.nickname, otherID: taekim.nickname };
+  const okBody = {
+    myID: sayi.nickname,
+    otherID: taekim.nickname,
+    isFriend: true,
+  };
   it('myID nickname 존재 확인', async () =>
     await testAddFriend(okBody, { ...okBody, myID: 'anony' }, ERROR));
 
@@ -97,67 +101,67 @@ describe('profile add friend 테스트', () => {
     await testAddFriend(okBody, { ...okBody, otherID: 'anony' }, ERROR));
 });
 
-const testAddBlock = async (
-  okBody: object,
-  failBody: object,
-  error: string,
-) => {
-  const url = `${host}/profile/block`;
-  await testPutStatus(url, okBody, 200);
-  const fail = await testPutStatus(url, failBody, 400);
-  expect(fail).toBe(error);
-};
+// const testAddBlock = async (
+//   okBody: object,
+//   failBody: object,
+//   error: string,
+// ) => {
+//   const url = `${host}/profile/block`;
+//   await testPutStatus(url, okBody, 200);
+//   const fail = await testPutStatus(url, failBody, 400);
+//   expect(fail).toBe(error);
+// };
 
-describe('profile add block 테스트', () => {
-  beforeEach(async () => await initDB());
+// describe('profile add block 테스트', () => {
+//   beforeEach(async () => await initDB());
 
-  const okBody = { myID: sayi.nickname, otherID: taekim.nickname };
-  it('myID nickname 존재 확인', async () =>
-    await testAddBlock(okBody, { ...okBody, myID: 'anony' }, ERROR));
+//   const okBody = { myID: sayi.nickname, otherID: taekim.nickname };
+//   it('myID nickname 존재 확인', async () =>
+//     await testAddBlock(okBody, { ...okBody, myID: 'anony' }, ERROR));
 
-  it('otherID nickname 존재 확인', async () =>
-    await testAddBlock(okBody, { ...okBody, otherID: 'anony' }, ERROR));
-});
+//   it('otherID nickname 존재 확인', async () =>
+//     await testAddBlock(okBody, { ...okBody, otherID: 'anony' }, ERROR));
+// });
 
-const testGetProfileStatus = async (
-  url: string,
-  para: object,
-  expectStatus: number,
-) => {
-  // {
-  //   const { data } = v;
-  //   console.log(data);
-  //   return v;
-  // }
-  const result = await axios
-    .get(url, para)
-    .then((v) => v)
-    .catch((reason) => reason.response);
-  expect(result.status).toBe(expectStatus);
-  if (result.data) return result.data.error;
-  return 'OK';
-};
+// const testGetProfileStatus = async (
+//   url: string,
+//   para: object,
+//   expectStatus: number,
+// ) => {
+//   // {
+//   //   const { data } = v;
+//   //   console.log(data);
+//   //   return v;
+//   // }
+//   const result = await axios
+//     .get(url, para)
+//     .then((v) => v)
+//     .catch((reason) => reason.response);
+//   expect(result.status).toBe(expectStatus);
+//   if (result.data) return result.data.error;
+//   return 'OK';
+// };
 
-const testGetProfile = async (
-  okParam: object,
-  failParam: object,
-  error: string,
-) => {
-  const url = `${host}/profile`;
-  await testGetProfileStatus(url, okParam, 200);
-  const fail = await testGetProfileStatus(url, failParam, 400);
-  expect(fail).toBe(error);
-};
+// const testGetProfile = async (
+//   okParam: object,
+//   failParam: object,
+//   error: string,
+// ) => {
+//   const url = `${host}/profile`;
+//   await testGetProfileStatus(url, okParam, 200);
+//   const fail = await testGetProfileStatus(url, failParam, 400);
+//   expect(fail).toBe(error);
+// };
 
-describe('profile add block 테스트(taekim의 전적 검색)', () => {
-  beforeEach(async () => await initDB());
+// describe('profile add block 테스트(taekim의 전적 검색)', () => {
+//   beforeEach(async () => await initDB());
 
-  const okParam = { params: { myID: sayi.nickname, otherID: taekim.nickname } };
-  let failParam = { params: { myID: 'anony', otherID: taekim.nickname } };
-  it('myID nickname 존재 확인', async () =>
-    await testGetProfile(okParam, failParam, ERROR));
+//   const okParam = { params: { myID: sayi.nickname, otherID: taekim.nickname } };
+//   let failParam = { params: { myID: 'anony', otherID: taekim.nickname } };
+//   it('myID nickname 존재 확인', async () =>
+//     await testGetProfile(okParam, failParam, ERROR));
 
-  failParam.params = { myID: sayi.nickname, otherID: 'anony' };
-  it('otherID nickname 존재 확인', async () =>
-    await testGetProfile(okParam, failParam, ERROR));
-});
+//   failParam.params = { myID: sayi.nickname, otherID: 'anony' };
+//   it('otherID nickname 존재 확인', async () =>
+//     await testGetProfile(okParam, failParam, ERROR));
+// });

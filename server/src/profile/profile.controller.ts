@@ -13,8 +13,8 @@ export class ProfileController {
 
   @Put('friend')
   addFriend(@Body() body) {
-    const { myID, otherID } = body;
-    return this.profileService.addFriend(myID, otherID);
+    const { myID, otherID, isFriend } = body;
+    return this.profileService.addFriend(myID, otherID, isFriend);
   }
 
   @Put('block')

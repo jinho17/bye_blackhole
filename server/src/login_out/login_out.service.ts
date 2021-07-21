@@ -2,13 +2,19 @@ import { Injectable, Logger } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import axios from 'axios';
 import * as FormData from 'form-data';
-// import { validate } from 'class-validator';
+// import FormData from 'form-data';
 
 @Injectable()
 export class LogInOutService {
   constructor(private readonly usersService: UsersService) {}
-  //   async create(createUsersDto: CreateUsersDto) {}
-
+  parseAxios = (v) => {
+    if (v.request) {
+      // console.log(v);
+      console.log(v.request._header);
+      console.log(v.response.data);
+    }
+    return v;
+  };
   async login(code: string) {
     const url = 'https://api.intra.42.fr/oauth/token';
     const client_id =
@@ -20,21 +26,28 @@ export class LogInOutService {
     formData.append('client_id', client_id);
     formData.append('client_secret', client_secret);
     formData.append('code', code);
-    const result = await axios.post(url, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
+    axios.interceptors.request.use((request) => {
+      const { url } = request;
+      console.log(url);
+      console.log('Starting Request', request);
+      return request;
     });
-    // .then((v) => {
-    //   console.log(v);
-    //   return v;
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    //   return error;
-    // });
+    const result = await axios
+      .post(url, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data;',
+        },
+      })
+      .then((v) => {
+        this.parseAxios(v);
+        return v;
+      })
+      .catch((error) => {
+        this.parseAxios(error);
+        return error;
+      });
     // console.log(result);
-    return result;
+    return 'result';
   }
 
   async findByIntraId(intra_id: string) {}

@@ -23,8 +23,8 @@ export class ProfileService {
     return { ...profile, history, win, lose };
   }
 
-  async addFriend(myID: string, otherID: string) {
-    return await this.usersService.addFriend(myID, otherID);
+  async addFriend(myID: string, otherID: string, isFriend: boolean) {
+    return await this.usersService.addFriend(myID, otherID, isFriend);
   }
 
   async addBlock(myID: string, otherID: string) {

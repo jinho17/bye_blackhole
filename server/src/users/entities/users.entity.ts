@@ -23,15 +23,15 @@ export class UsersEntity {
   @Column({ default: 1000 })
   ladder_level: number;
 
-  @Column('simple-array', { nullable: true })
+  @Column('simple-array', { nullable: true, default: '' })
   friend_list: string[];
 
-  @Column('simple-array', { nullable: true })
+  @Column('simple-array', { nullable: true, default: '' })
   match_history: string[];
 
-  @Column('simple-array', { nullable: true })
+  @Column('simple-array', { nullable: true, default: '' })
   block_list: string[];
 
-  @Column('simple-array', { nullable: true })
+  @Column('simple-array', { nullable: true, default: '' })
   chat_room: string[];
 }
